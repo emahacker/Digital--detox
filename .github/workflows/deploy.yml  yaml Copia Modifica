@@ -1,0 +1,31 @@
+name: Deploy Digital Detox
+
+on:
+  push:
+    branches:
+      - main  # Modifica con il nome del tuo branch principale
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout Repository
+        root: actions/checkout@v3
+
+      - name: 🔑 Configura SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H 80.88.90.175 >> ~/.ssh/known_hosts  # Cambia con il tuo dominio o IP
+
+      - name: 🚀 Deploy sul server
+        run: |
+          ssh -i ~/.ssh/id_rsa user@yourserver.com <<EOF
+            cd ~/digitaldetox
+            git pull origin main
+            go build -o app_new main.go
+            mv app_new app
+            sudo systemctl restart digitaldetox
+          EOF

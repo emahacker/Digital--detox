@@ -177,3 +177,24 @@ footer {
     display: block;
     margin: 0 auto;
 }
+
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 16px; /* Regola la dimensione del testo per schermi piccoli */
+        padding: 10px;
+    }
+    
+    .container {
+        width: 100%; /* Adatta il contenitore alla larghezza del dispositivo */
+    }
+
+    .menu {
+        display: block; /* Assicura che il menu sia visibile e ben posizionato */
+        text-align: center;
+    }
+
+    img {
+        max-width: 100%; /* Impedisce alle immagini di fuoriuscire dallo schermo */
+        height: auto;
+    }
+}
